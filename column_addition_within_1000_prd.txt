@@ -1,0 +1,722 @@
+Product Requirements Document (PRD)
+Column Addition & Subtraction within 1000 — Grade 2 Math
+Intellia SG | Singapore Primary Mathematics Curriculum (MOE)
+
+═══════════════════════════════════════════════════════════════
+
+1. EXECUTIVE SUMMARY
+
+This document defines product requirements for the "Column Addition and Subtraction
+within 1000" interactive lesson module, delivered as a standalone lesson within
+Intellia SG's Grade 2 Math program. The module targets Singapore Primary 2
+students aged 7–8 and teaches column addition and subtraction algorithms with and
+without regrouping, using 3-digit numbers up to 1000, fully aligned with the
+Singapore MOE Mathematics Framework and the Primary 2 Targeting Mathematics
+syllabus.
+
+The product is a standalone web page hosted at:
+
+https://intelliasg.com/courses/grade-1-math/lessons/column-addition-subtraction-within-1000/
+
+It is built using React (Vite + JSX, JavaScript/CSS) and designed to strictly
+mirror the visual and UX structure established at https://numberbound.vercel.app/
+and the repository https://github.com/dsamyak/numberbound.
+
+Audio narration is delivered via ElevenLabs (Voice: Alice, eleven_multilingual_v2)
+using a hybrid pre-generation + dynamic fallback pipeline (see Section 11).
+
+The module follows Intellia's 5-phase learner journey:
+
+  Phase 1 — WONDER     → curiosity hook
+  Phase 2 — STORY      → narrative-based concept introduction
+  Phase 3 — SIMULATE   → sandbox-style interactive simulation
+  Phase 4 — PLAY       → IntelliPlay™ gamified practice (100 questions)
+  Phase 5 — REFLECT    → journal / LearnFlow AI prompt
+
+═══════════════════════════════════════════════════════════════
+
+2. PRODUCT VISION & GOALS
+
+Vision
+
+To make column addition and subtraction with 3-digit numbers intuitive, visual,
+and memorable for 7–8 year old Singapore learners through animated column
+algorithm simulations, place value scaffolding, regrouping (carrying/borrowing)
+visualisations, and adaptive gamified challenge — all delivered in a consistent
+Intellia experience.
+
+Goals
+
+Goal                         | Metric
+-----------------------------|----------------------------------------------
+Learning Completion          | ≥85% of students complete all 5 phases
+Practice Engagement          | ≥90% attempt at least 10 practice questions
+Score Achievement            | Average challenge score ≥75% first attempt
+Session Duration             | Average engagement ≥18 minutes per session
+Curriculum Alignment         | 100% aligned to Singapore MOE Primary 2
+Phase Progression            | ≥80% reach Play phase in a single session
+Regrouping Mastery           | ≥70% answer regrouping questions correctly
+
+═══════════════════════════════════════════════════════════════
+
+3. TARGET USERS
+
+Primary: Grade 2 Students (Age 7–8)
+
+  - Emerging readers; prefer visual scaffolding and animated feedback
+  - Learning concrete-to-abstract (C → P → A): base-10 blocks → column
+    layout → abstract number sentences
+  - Short attention spans; need frequent micro-rewards and variety
+  - Singapore context: familiar with local names, places, and school objects
+  - Beginning to understand hundreds, tens, and ones place values
+
+Secondary: Parents & Teachers
+
+  - Assign as classwork or homework
+  - Expect strict MOE Primary 2 curriculum alignment
+  - Monitor via completion indicators and star ratings
+  - May use the module on tablets in the classroom
+
+═══════════════════════════════════════════════════════════════
+
+4. CURRICULUM ALIGNMENT — Singapore MOE Primary 2
+
+Topic: Column Addition and Subtraction within 1000
+Programme: Intellia SG Grade 2 Math
+Section: Numbers to 1000 & Addition and Subtraction
+
+Source Textbooks Referenced:
+
+  - Targeting Mathematics Primary 2A / 2B (Casco Publications)
+    → Chapter: Numbers to 1000
+       • Hundreds, Tens, Ones (place value)
+       • Counting and comparing 3-digit numbers
+    → Chapter: Addition and Subtraction within 1000
+       • Addition without regrouping (3-digit + 2/3-digit)
+       • Addition with regrouping in the ones place
+       • Addition with regrouping in the tens place
+       • Addition with regrouping in ones and tens
+       • Subtraction without regrouping
+       • Subtraction with regrouping in the tens place
+       • Subtraction with regrouping in the hundreds place
+       • Subtraction with regrouping at two places
+       • Word problems (1-step and 2-step)
+
+  - My Pals Are Here! Math 2A / 2B (Marshall Cavendish)
+    → Chapter 13: Addition and Subtraction within 1000
+       • Column algorithm layout
+       • Regrouping strategies
+       • Let's Think Along / Let's Practise
+
+MOE Learning Objectives Covered:
+
+  LO1: Understand place value — hundreds, tens, ones — in 3-digit numbers
+  LO2: Add two 3-digit numbers using column method without regrouping
+  LO3: Add with regrouping in the ones column (sum of ones ≥ 10)
+  LO4: Add with regrouping in the tens column (sum of tens ≥ 10)
+  LO5: Add with regrouping in both ones and tens columns
+  LO6: Subtract using column method without regrouping
+  LO7: Subtract with regrouping from the tens (borrow from tens)
+  LO8: Subtract with regrouping from the hundreds (borrow from hundreds)
+  LO9: Subtract with regrouping at two places
+  LO10: Solve 1-step and 2-step word problems using column addition/subtraction
+
+Singapore Syllabus Concepts (CPA Progression):
+
+  Concrete   → Base-10 blocks (hundreds flats, tens rods, ones cubes) — simulated
+  Pictorial  → Column layout diagram with H|T|O place-value columns
+  Abstract   → Written algorithm with carried/borrowed digits
+
+Number Ranges (phased difficulty):
+
+  Phase A: Addition/Subtraction within 100 (2-digit warm-up)
+  Phase B: Addition/Subtraction within 500 (3-digit, no regrouping)
+  Phase C: Addition/Subtraction within 1000 (3-digit, with regrouping)
+
+═══════════════════════════════════════════════════════════════
+
+5. THE 5-PHASE LEARNER JOURNEY (Intellia Model)
+
+┌────────────────────────────────────────────────────────────┐
+│  INTRO SCREEN → Progress Map (5 steps visual tracker)      │
+└────────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 1 — WONDER  (≈ 1–2 min)                              │
+│  Hook: "A baker baked 347 muffins! She sold 185.            │
+│         How many are still in the shop? 🧁"                  │
+│  Animated 3-digit numbers appear and "stack up" on screen   │
+│  Mascot LearnFlow appears, poses the challenge              │
+│  → Mystery builds: "Can you crack the column code?"         │
+└─────────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 2 — STORY  (≈ 2–3 min)                               │
+│  Narrative: "Mei Ling and Raj are stacking books for the    │
+│  school library. Mei Ling has 234 books. Raj has 158 books. │
+│  How many books are there in all?"                           │
+│  Animated story panels → base-10 blocks appear              │
+│  Column layout is introduced visually (H | T | O columns)   │
+│  Regrouping is shown: 10 ones become 1 ten (animation)      │
+└─────────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 3 — SIMULATE  (≈ 5–6 min)                            │
+│  Sandbox: Interactive column algorithm builder              │
+│  Station A: Base-10 blocks → place value visualiser         │
+│  Station B: Column addition with drag-to-regroup mechanic   │
+│  Station C: Column subtraction with borrow animation        │
+│  → Student discovers the algorithm by doing, not watching   │
+└─────────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 4 — PLAY  (≈ 6–8 min)                                │
+│  IntelliPlay™ Level: 100 randomised questions               │
+│  Shown in sets of 10 — "worlds" to unlock                   │
+│  Stars, XP, badges, streak fire counter                     │
+│  Column layout shown for all algorithm questions            │
+│  → Mastery is the cost of getting to the next world         │
+└─────────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 5 — REFLECT  (≈ 1–2 min)                             │
+│  Journal prompt: "Explain how you regroup when adding!"     │
+│  Or: LearnFlow AI chat (type/speak your understanding)      │
+│  → Lesson complete only here. Completion badge unlocked.    │
+└─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+
+6. PHASE 2 — STORY CONTENT SCRIPT (Narration Aligned)
+
+Panel 1 — Introduction
+  Visual: School library scene, Mei Ling and Raj carrying stacks of books
+  Text:   "Mei Ling has 234 books. Raj has 158 books."
+  Audio:  "Mei Ling has two hundred and thirty-four books.
+           Raj has one hundred and fifty-eight books."
+
+Panel 2 — The Question
+  Visual: Thought bubble showing 234 + 158 = ?
+  Text:   "How many books do they have altogether?"
+  Audio:  "How many books do they have altogether? Let's use
+           the column method to find out!"
+
+Panel 3 — Setting Up Columns
+  Visual: H | T | O grid appears. 234 and 158 written in columns.
+  Text:   "Write the numbers one on top of the other.
+           Hundreds under hundreds, Tens under tens, Ones under ones."
+  Audio:  "First, we line up the numbers in columns. Hundreds,
+           Tens, and Ones — each in their own column."
+
+Panel 4 — Add the Ones
+  Visual: Ones column highlights. 4 + 8 = 12. Ones digit shows 2.
+  Text:   "4 ones + 8 ones = 12 ones. Regroup! 10 ones = 1 ten."
+  Audio:  "We start with the ones. Four plus eight equals twelve.
+           That's more than nine, so we regroup! Ten ones become
+           one ten. We write 2 in the ones column and carry 1 to the tens."
+
+Panel 5 — Carry to Tens
+  Visual: Animated "1" flies from ones column to tens. Tens column highlights.
+  Text:   "Carry 1 ten. 1 + 3 + 5 = 9 tens."
+  Audio:  "Now add the tens. One carried, plus three, plus five
+           equals nine. Nine tens! Write 9 in the tens column."
+
+Panel 6 — Add the Hundreds
+  Visual: Hundreds column highlights. 2 + 1 = 3.
+  Text:   "2 hundreds + 1 hundred = 3 hundreds."
+  Audio:  "Finally, the hundreds. Two plus one equals three hundred."
+
+Panel 7 — The Answer
+  Visual: Full column sum revealed: 234 + 158 = 392. Celebration!
+  Text:   "234 + 158 = 392. Together they have 392 books! 🎉"
+  Audio:  "Amazing! Two hundred and thirty-four plus one hundred and
+           fifty-eight equals three hundred and ninety-two.
+           Together they have three hundred and ninety-two books!"
+
+═══════════════════════════════════════════════════════════════
+
+7. PHASE 3 — SIMULATION DESIGN (Detail)
+
+7.1 Station A — Base-10 Block Builder (Concrete)
+
+  Visual: Three columns (H, T, O) with draggable base-10 blocks
+          Hundreds = flat squares (10×10 grids)
+          Tens = rods (1×10 columns)
+          Ones = unit cubes
+
+  Interaction:
+    - Child is given a 3-digit number, e.g. 256
+    - Drag the correct count of hundreds flats, tens rods, and ones cubes
+      into their respective columns
+    - Blocks snap into place with a satisfying click animation
+    - Correct count: column glows green; incorrect: gentle shake + retry
+
+  Teaching: Builds place-value intuition before column algorithm
+
+7.2 Station B — Column Addition with Regrouping (Pictorial)
+
+  Visual: Two 3-digit numbers displayed in H|T|O column layout
+          Interactive column cells (ones, tens, hundreds)
+
+  Interaction:
+    - Child taps the ones column to add ones digit by digit
+    - If sum ≥ 10, a "Regroup" button glows — child must tap it
+    - Animation: 10 ones cubes bundle into 1 ten rod and fly to tens column
+    - "Carry digit" animates into the top of the tens column
+    - Repeat for tens (if needed) and hundreds
+    - Final answer verified when all columns filled
+
+  Variants:
+    - No regrouping (ones + ones < 10, tens + tens < 10)
+    - Regrouping in ones only
+    - Regrouping in tens only
+    - Regrouping in both ones and tens
+
+  5 problems per station; advance after 4/5 correct
+
+7.3 Station C — Column Subtraction with Borrowing (Pictorial → Abstract)
+
+  Visual: Two 3-digit numbers in H|T|O column layout (top minus bottom)
+
+  Interaction:
+    - Child taps the ones column; if top < bottom, a "Borrow" button glows
+    - Animation: 1 ten rod breaks into 10 ones cubes and "fall" to ones column
+    - Top ones digit updates (+10); tens digit decrements (−1)
+    - Child enters the difference for each column using the number pad
+    - Carries/borrows visualised with animated arrows and colour changes
+
+  Variants:
+    - No borrowing
+    - Borrow from tens only
+    - Borrow from hundreds only
+    - Borrow at two places
+
+  Teaching: The abstract "crossing out and writing" is physically felt first
+
+═══════════════════════════════════════════════════════════════
+
+8. PHASE 4 — QUESTION BANK (100 Randomised Questions)
+
+8.1 Question Types (10 types × 10 questions = 100)
+
+Type | Description                               | Example
+-----|-------------------------------------------|----------------------------------------------
+Q1   | Column addition — no regrouping           | 234 + 152 = ? (column shown)
+Q2   | Column addition — regroup ones            | 247 + 135 = ? (ones: 7+5=12)
+Q3   | Column addition — regroup tens            | 362 + 174 = ? (tens: 6+7=13)
+Q4   | Column addition — regroup ones & tens     | 375 + 248 = ? (both regroup)
+Q5   | Column subtraction — no borrowing         | 579 – 243 = ?
+Q6   | Column subtraction — borrow from tens     | 534 – 217 = ? (ones: 4<7)
+Q7   | Column subtraction — borrow from hundreds | 623 – 358 = ? (tens: 2<5)
+Q8   | Column subtraction — borrow at two places | 802 – 367 = ?
+Q9   | Word problem (addition)                   | Priya has 346 stamps. She buys 237 more.
+     |                                           | How many does she have now?
+Q10  | Word problem (subtraction)                | There are 715 students. 286 go home.
+     |                                           | How many are left?
+
+8.2 Question Distribution
+
+Type  | Count | Difficulty Split (Easy / Medium / Hard)
+------|-------|----------------------------------------
+Q1    |  10   | 5 / 3 / 2
+Q2    |  10   | 4 / 4 / 2
+Q3    |  10   | 4 / 3 / 3
+Q4    |  10   | 3 / 4 / 3
+Q5    |  10   | 5 / 3 / 2
+Q6    |  10   | 4 / 4 / 2
+Q7    |  10   | 3 / 4 / 3
+Q8    |  10   | 2 / 4 / 4
+Q9    |  10   | 4 / 3 / 3
+Q10   |  10   | 3 / 4 / 3
+TOTAL | 100   | 37 / 36 / 27
+
+8.3 Number Ranges
+
+  Easy   : 3-digit numbers, sums/differences within 500, minimal or no regrouping
+  Medium : 3-digit numbers, sums/differences 500–800, one level of regrouping
+  Hard   : 3-digit numbers, sums/differences up to 1000, regrouping at two places
+
+8.4 Singapore Context Names & Scenarios for Word Problems
+
+  Names    : Mei Ling, Raj, Wei Ming, Priya, Ahmad, Siti, Jun, Ryan, Xiao Hong, Devi
+  Objects  : stamps, marbles, stickers, books, buttons, beads, cookies, eggs, seeds, muffins
+  Settings : school library, hawker stall, community garden, void deck, playground,
+             supermarket, sports day, class collection, school bookshop
+
+8.5 MCQ Distractor Strategy (for all question types)
+
+  Distractors are always within ±20 of correct answer (realistic errors):
+    - Off-by-regrouping error: student forgot to carry/borrow
+    - Column misalignment error: digit placed in wrong column
+    - Sign error: addition instead of subtraction or vice versa
+  All MCQs have exactly 4 options. Correct answer position randomised per session.
+
+═══════════════════════════════════════════════════════════════
+
+9. GAMIFICATION DESIGN
+
+9.1 Reward System
+
+  Stars (⭐): Earned per 10-question world set (1–3 stars based on score)
+    3 stars: 9–10 correct  |  2 stars: 7–8  |  1 star: 5–6  |  0 stars: < 5
+
+  XP Points:
+    Correct first attempt  : 10 XP
+    Correct second attempt : 7 XP
+    Correct with hint      : 5 XP
+    Streak Bonus           : +5 XP per correct answer when streak ≥ 5
+
+  Streak 🔥: Fire counter for consecutive correct answers; resets on wrong answer
+
+9.2 Badges (Unlockable)
+
+  🏅 "Column Cadet"     — Complete Wonder + Story phases
+  🥈 "Block Builder"    — Complete Simulate phase (all 3 stations)
+  🥇 "Regroup Ranger"   — Score 80%+ on Play phase
+  💎 "Perfect Column"   — Score 10/10 in any single world
+  🔥 "Streak Blazer"    — Achieve a streak of 10+ consecutive correct answers
+  🌟 "Column Champion"  — Complete all 5 phases (lesson complete)
+  🧮 "Carry King"       — Answer 5 consecutive regrouping (addition) questions correctly
+  📏 "Borrow Boss"      — Answer 5 consecutive regrouping (subtraction) questions correctly
+
+9.3 Feedback Mechanics
+
+  ✅ Correct:
+     - Column cells highlight green one by one (animated cascade)
+     - Bounce animation on the answer
+     - Narration: "Brilliant! Your column method is perfect! 🎉"
+       (celebration style: stability 0.12, similarity 0.45, style 0.75)
+
+  ❌ Incorrect (first attempt):
+     - Gentle red shake on the incorrect column
+     - Narration: "Hmm, not quite! Let's check our columns again."
+       (encouragement style: stability 0.16, similarity 0.50, style 0.65)
+     - Hint 1 available: column diagram highlights the step where error occurred
+
+  ❌ Incorrect (second attempt):
+     - Hint 2: animated step-by-step column solve
+     - Narration: "Let me show you — watch the ones column first!"
+       (thinking style: stability 0.24, similarity 0.60, style 0.35)
+
+  After 2 fails: Full animated explanation with narration, answer revealed
+  No negative scoring — encouragement-first, always.
+
+9.4 World Map (IntelliPlay™ Level Progression)
+
+  World 1  — "Tens Town"        (Q1–10,   addition no regroup,        easy)
+  World 2  — "Hundreds Hill"    (Q11–20,  addition no regroup,        medium)
+  World 3  — "Carry Canyon"     (Q21–30,  addition regroup ones,      easy-med)
+  World 4  — "Tens Tower"       (Q31–40,  addition regroup tens,      medium)
+  World 5  — "Double Bridge"    (Q41–50,  addition regroup both,      hard)
+  World 6  — "Subtract Valley"  (Q51–60,  subtraction no borrow,     easy)
+  World 7  — "Borrow Bay"       (Q61–70,  subtraction borrow tens,   medium)
+  World 8  — "Hundreds Harbor"  (Q71–80,  subtraction borrow hunds,  medium)
+  World 9  — "Zero Zone"        (Q81–90,  subtraction borrow 2 place,hard)
+  World 10 — "Number Palace"    (Q91–100, mixed addition+subtraction, hard)
+
+  Each world unlocks only when ≥6/10 correct (1-star minimum)
+  3 stars required for bonus "hidden challenge" in each world
+
+9.5 Mascot (LearnFlow AI Companion)
+
+  Character  : Friendly robot (matching Intellia branding — "LearnFlow")
+  Mood states: idle | curious | happy | thinking | celebrating
+  Appears in : Wonder hook, Story narration, Simulate guidance, Reflect phase
+  Reacts to  : Correct answer, badge unlock, streak milestone, regrouping moment
+  Unique      : Mascot holds a tiny "carry digit" flag during regrouping explanations
+
+═══════════════════════════════════════════════════════════════
+
+10. UX & VISUAL DESIGN REQUIREMENTS
+
+10.1 Visual Theme
+
+  Brand:       Intellia SG — Think. Explore. Become.
+  Reference:   https://numberbound.vercel.app/ (strictly mirrored)
+  Colour Palette (matching numberbound):
+    - Primary Blue   : #4A90D9 (consistent with existing lessons)
+    - Accent Gold    : #FFD700 (rewards, stars, highlights)
+    - Soft Coral     : #FF6B6B (wrong answers, alerts)
+    - Hundreds Green : #27AE60 (hundreds column highlight)
+    - Tens Orange    : #F39C12 (tens column highlight)
+    - Ones Blue      : #2980B9 (ones column highlight)
+    - White Card     : #FFFFFF with box-shadow: 0 4px 16px rgba(0,0,0,0.1)
+    - Background     : #F0F4FF (soft lavender-white)
+  Typography:  Nunito / Fredoka One (rounded, playful, child-friendly)
+  Illustrations: Cartoon-style, Singapore context, warm and diverse characters
+
+10.2 Column Layout Visual (Core UI Element)
+
+  The H|T|O column grid is the central visual motif of this lesson.
+  Displayed as a bordered table with:
+    - Column headers: "H" (green), "T" (orange), "O" (blue)
+    - Large digit cells (min 60×60px on mobile)
+    - Animated carry/borrow indicators (small superscript "1" that flies/fades)
+    - Base-10 block decorative icons beside each column header
+    - A horizontal line above the answer row (classic written algorithm style)
+
+10.3 Layout Structure (mirrors numberbound.vercel.app)
+
+  Top bar    : Intellia logo | Lesson title | Progress (5-dot tracker) | XP counter
+  Main area  : Phase content (fills screen, responsive)
+  Bottom bar : Stars | Streak 🔥 | Phase navigation buttons
+  Sidebar    : Hidden on mobile; shown on tablet+ (phase map with world progress)
+
+10.4 Accessibility
+
+  - Large tap targets (min 44×44px), especially column cells and number pad
+  - WCAG AA colour contrast on all text
+  - Audio narration via ElevenLabs (see Section 11) with Web Audio fallback
+  - Keyboard navigable (Tab through columns, Enter to confirm)
+  - No mandatory time pressure (optional timer in Hard challenge mode only)
+  - Dyslexia-friendly font option (Lexie Readable toggle)
+
+10.5 Responsive Design
+
+  Primary   : iPad / tablet (768px+) — classroom primary device
+  Secondary : Desktop browser (1024px+)
+  Tertiary  : Mobile (375px+) — stacked column layout, larger tap zones
+
+═══════════════════════════════════════════════════════════════
+
+11. AUDIO PIPELINE (ElevenLabs — Full Integration)
+
+11.1 Voice Profile & Settings
+
+  Voice Provider : ElevenLabs
+  Voice Name     : Alice (Clear, Engaging Educator)
+  Voice ID       : Xb7hH8MSUJpSbSDYk0k2
+  Model          : eleven_multilingual_v2
+
+  Voice Settings by Style:
+
+  Style                     | Stability | Similarity Boost | Style | Speaker Boost
+  --------------------------|-----------|-----------------|-------|---------------
+  celebration               |   0.12    |      0.45       |  0.75 |     ✅
+  encouragement             |   0.16    |      0.50       |  0.65 |     ✅
+  question                  |   0.20    |      0.55       |  0.55 |     ✅
+  emphasis                  |   0.16    |      0.50       |  0.60 |     ✅
+  thinking                  |   0.24    |      0.60       |  0.35 |     ✅
+  statement / instruction   |   0.20    |      0.55       |  0.50 |     ✅
+
+11.2 Content Policy: Paragraphs & Questions ONLY
+
+  ⚠️ IMPORTANT: Audio is generated ONLY for paragraph text and questions.
+  Titles, headings, and section labels are NEVER narrated.
+  Column labels ("Hundreds", "Tens", "Ones") are narrated only when
+  contextually introduced in story/simulation prose, not as standalone headers.
+
+11.3 Pre-Generation Phrases (generate_audio.js)
+
+  All narration segments below must be pre-generated and stored as static .mp3
+  files in public/assets/audio/ before deployment.
+
+  WONDER Phase:
+  { text: "Are you ready for a counting adventure with big numbers?", style: "question" },
+  { text: "Today we will learn how to add and subtract numbers all the way up to one thousand!", style: "statement" },
+  { text: "A baker baked three hundred and forty-seven muffins. She sold one hundred and eighty-five. How many are still in the shop?", style: "question" },
+  { text: "That is a BIG number challenge! Can you crack the column code?", style: "emphasis" },
+
+  STORY Phase:
+  { text: "Mei Ling has two hundred and thirty-four books. Raj has one hundred and fifty-eight books.", style: "statement" },
+  { text: "How many books do they have altogether? Let's use the column method to find out!", style: "question" },
+  { text: "First, we line up the numbers in columns. Hundreds under hundreds, Tens under tens, Ones under ones.", style: "instruction" },
+  { text: "We always start with the ones column first.", style: "emphasis" },
+  { text: "Four ones plus eight ones equals twelve ones. That is more than nine!", style: "statement" },
+  { text: "When we have ten or more ones, we regroup! Ten ones become one ten.", style: "emphasis" },
+  { text: "We write two in the ones column and carry one to the tens.", style: "instruction" },
+  { text: "Now add the tens. One carried, plus three, plus five equals nine. Write nine in the tens column.", style: "statement" },
+  { text: "Finally the hundreds. Two plus one equals three hundred.", style: "statement" },
+  { text: "Two hundred and thirty-four plus one hundred and fifty-eight equals three hundred and ninety-two. Amazing!", style: "celebration" },
+
+  SIMULATE Phase:
+  { text: "Let us build the numbers using base-ten blocks first.", style: "instruction" },
+  { text: "Drag the hundreds flats, tens rods, and ones cubes into the correct columns.", style: "instruction" },
+  { text: "Now let us add the columns one at a time. Start with the ones!", style: "instruction" },
+  { text: "The ones add up to more than nine. Time to regroup! Press the regroup button.", style: "emphasis" },
+  { text: "Watch! Ten ones cubes bundle together and become one tens rod.", style: "thinking" },
+  { text: "Well done! Now let us try subtraction. When the top digit is smaller, we need to borrow.", style: "instruction" },
+  { text: "Press borrow to take one ten from the tens column. It breaks into ten ones!", style: "instruction" },
+  { text: "Excellent! You have mastered the column method!", style: "celebration" },
+
+  PLAY Phase (Question Feedback):
+  { text: "Brilliant! Your column method is perfect!", style: "celebration" },
+  { text: "Amazing! That is exactly right!", style: "celebration" },
+  { text: "Hmm, not quite! Let us check our columns again.", style: "encouragement" },
+  { text: "Almost there! Remember to check if you need to regroup.", style: "encouragement" },
+  { text: "Let me show you. Watch the ones column first!", style: "thinking" },
+  { text: "Remember, always add the ones first, then the tens, then the hundreds.", style: "instruction" },
+
+  REFLECT Phase:
+  { text: "You have done something incredible today. You learned to add and subtract hundreds!", style: "celebration" },
+  { text: "Can you explain to LearnFlow how regrouping works in your own words?", style: "question" },
+  { text: "You are a true Column Champion! Here is your badge.", style: "celebration" },
+
+11.4 Narration Segments (narration.js mapping)
+
+  export function wonderNarration() {
+    return [
+      ask("Are you ready for a counting adventure with big numbers?"),
+      say("Today we will learn how to add and subtract numbers all the way up to one thousand!"),
+      ask("A baker baked three hundred and forty-seven muffins. She sold one hundred and eighty-five. How many are still in the shop?"),
+      emphasize("That is a BIG number challenge! Can you crack the column code?"),
+    ];
+  }
+
+  export function storyNarration() {
+    return [
+      say("Mei Ling has two hundred and thirty-four books. Raj has one hundred and fifty-eight books."),
+      ask("How many books do they have altogether? Let us use the column method to find out!"),
+      instruct("First, we line up the numbers in columns. Hundreds under hundreds, Tens under tens, Ones under ones."),
+      emphasize("We always start with the ones column first."),
+      say("Four ones plus eight ones equals twelve ones. That is more than nine!"),
+      emphasize("When we have ten or more ones, we regroup! Ten ones become one ten."),
+      instruct("We write two in the ones column and carry one to the tens."),
+      say("Now add the tens. One carried, plus three, plus five equals nine. Write nine in the tens column."),
+      say("Finally the hundreds. Two plus one equals three hundred."),
+      celebrate("Two hundred and thirty-four plus one hundred and fifty-eight equals three hundred and ninety-two. Amazing!"),
+    ];
+  }
+
+  export function simulateIntroNarration() {
+    return [
+      instruct("Let us build the numbers using base-ten blocks first."),
+      instruct("Drag the hundreds flats, tens rods, and ones cubes into the correct columns."),
+    ];
+  }
+
+  export function simulateAddNarration() {
+    return [
+      instruct("Now let us add the columns one at a time. Start with the ones!"),
+      emphasize("The ones add up to more than nine. Time to regroup! Press the regroup button."),
+      think("Watch! Ten ones cubes bundle together and become one tens rod."),
+    ];
+  }
+
+  export function simulateSubNarration() {
+    return [
+      instruct("Well done! Now let us try subtraction. When the top digit is smaller, we need to borrow."),
+      instruct("Press borrow to take one ten from the tens column. It breaks into ten ones!"),
+      celebrate("Excellent! You have mastered the column method!"),
+    ];
+  }
+
+  export function reflectNarration() {
+    return [
+      celebrate("You have done something incredible today. You learned to add and subtract hundreds!"),
+      ask("Can you explain to LearnFlow how regrouping works in your own words?"),
+    ];
+  }
+
+  export function badgeNarration() {
+    return [
+      celebrate("You are a true Column Champion! Here is your badge."),
+    ];
+  }
+
+11.5 Dynamic Fallback
+
+  If any narration string is not found in audioMap.js (e.g. dynamically generated
+  question text), the system falls back to the ElevenLabs /v1/text-to-speech API
+  via the /api/elevenlabs proxy endpoint, using the per-style voice settings above.
+  Fallback calls are rate-limited at 500ms between requests.
+
+═══════════════════════════════════════════════════════════════
+
+12. CONTENT REQUIREMENTS
+
+12.1 Simulation Visuals
+
+  Column H|T|O grid : SVG-rendered, colour-coded columns, animated borders
+  Base-10 blocks    : Pixel-art style hundreds flats (green), tens rods (orange),
+                      ones cubes (blue) — consistent with Intellia colour palette
+  Carry indicator   : Animated superscript "1" that floats from ones to tens column
+  Borrow indicator  : Animated "−1" on tens digit; "+10" on ones (borrowing shown)
+  Number pad        : Circular, large (60px diameter), touch-friendly 0–9 grid
+
+12.2 Question Bank Coverage
+
+  All 10 question types × 10 questions = 100 unique questions
+  Questions randomised per session (Fisher-Yates shuffle)
+  No two sessions present the same question order
+  MCQ distractors reflect realistic student errors (see §8.5)
+  Column layout shown as visual aid for Q1–Q8; word problems use pictorial context
+
+12.3 Word Problems — Singapore MOE Style
+
+  Format: "[Character] had/has ___ [objects]. [Action involving ___].
+            How many [objects] does [character] have [now/left/altogether]?"
+  2-step word problems introduced in Hard difficulty worlds only
+  Aligned to "Let's Think Along" style from Targeting Mathematics 2A/2B
+
+12.4 Visual Difficulty Indicators
+
+  Easy   : Green border on question card, 1 star label
+  Medium : Yellow/amber border, 2 star label
+  Hard   : Red/orange border, 3 star label
+
+═══════════════════════════════════════════════════════════════
+
+13. TECHNICAL PLATFORM SUMMARY
+
+  Framework     : React 18 (Vite + JSX), single-page application
+  Repo structure: Strictly mirrors https://github.com/dsamyak/numberbound
+  Audio         : ElevenLabs (pre-generated .mp3 assets) + dynamic fallback
+  Hosting       : Embedded in Intellia SG WordPress at lesson URL
+                  via iframe or React CDN bundle
+  Browser       : Chrome, Safari, Edge, Firefox (latest 2 major versions)
+  Auth          : None required — guest learner access
+  State         : localStorage (session resume within 24 hours)
+  Analytics     : Question attempt tracking (future phase v2)
+  Env vars      : VITE_ELEVENLABS_API_KEY in .env.local
+
+═══════════════════════════════════════════════════════════════
+
+14. SUCCESS CRITERIA (v1.0)
+
+Criterion                                         | Target
+--------------------------------------------------|------------------
+All 100 questions randomised correctly            | ✅ Required
+All 3 simulation stations functional              | ✅ Required
+All 5 phases navigable end-to-end                 | ✅ Required
+Gamification (XP, stars, badges) working          | ✅ Required
+World map progression logic correct               | ✅ Required
+Mobile/tablet responsive                          | ✅ Required
+Singapore MOE Primary 2 syllabus 100% covered     | ✅ Required
+Column H|T|O visualiser renders correctly         | ✅ Required
+Regrouping animation (carry/borrow) functional    | ✅ Required
+ElevenLabs audio pre-generated for all phrases    | ✅ Required
+Dynamic audio fallback functional                 | ✅ Required
+Load time < 3 seconds                             | ✅ Required
+WCAG AA accessible                                | ✅ Required
+Matches numberbound.vercel.app UI/UX              | ✅ Required
+
+═══════════════════════════════════════════════════════════════
+
+15. OUT OF SCOPE (v1.0)
+
+  - Teacher dashboard / backend analytics
+  - Student login / account system
+  - Multiplayer or class competition features
+  - Parent progress emails
+  - Print worksheet generation
+  - Multiplication or division content
+  - Mental math strategy modules (separate lesson)
+  - 4-digit addition/subtraction
+  - Lesson page for subtraction only (covered here as combined topic)
+
+═══════════════════════════════════════════════════════════════
+
+Document Version : 1.0 | June 2026
+Product          : Intellia SG — Grade 2 Math, Column Addition & Subtraction ≤1000
+Curriculum       : Singapore MOE Primary 2 Mathematics
+Reference UI     : https://numberbound.vercel.app/
+Reference Repo   : https://github.com/dsamyak/numberbound
+Parent Page      : https://intelliasg.com/courses/grade-1-math/
+Audio Pipeline   : ElevenLabs (Alice, eleven_multilingual_v2)
+                   Voice ID: Xb7hH8MSUJpSbSDYk0k2
