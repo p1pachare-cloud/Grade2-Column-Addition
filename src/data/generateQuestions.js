@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const NAMES = ['Mei Ling', 'Raj', 'Wei Ming', 'Priya', 'Ahmad', 'Siti', 'Jun', 'Ryan', 'Xiao Hong', 'Devi'];
+const NAMES = ['Mei Ling', 'Mike', 'Wei Ming', 'Priya', 'Ahmad', 'Siti', 'Jun', 'Ryan', 'Xiao Hong', 'Devi'];
 const OBJECTS = ['stamps', 'marbles', 'stickers', 'books', 'buttons', 'beads', 'cookies', 'eggs', 'seeds', 'muffins'];
 const SETTINGS = ['school library', 'hawker stall', 'community garden', 'void deck', 'playground', 'supermarket', 'sports day', 'class collection', 'school bookshop'];
 

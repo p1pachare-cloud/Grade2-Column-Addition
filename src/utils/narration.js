@@ -17,7 +17,7 @@ export function wonderNarration() {
 // ─── Phase 2 — Story panels ──────────────────────────────────────
 export function storyPanel1Narration() {
   return [
-    say("Mei Ling has two hundred and thirty-four books. Raj has one hundred and fifty-eight books."),
+    say("Mei Ling has two hundred and thirty-four books. Mike has one hundred and fifty-eight books."),
   ];
 }
 

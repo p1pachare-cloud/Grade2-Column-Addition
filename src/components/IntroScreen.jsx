@@ -36,7 +36,7 @@ export default function IntroScreen({ onStart, onResume, hasSession }) {
 
       {/* Description */}
       <p className="intro-subtitle">
-        Join Mei Ling and Raj to solve the bakery's muffin orders! Learn how to align column columns, carry, and borrow to add and subtract numbers up to 1000!
+        Join Mei Ling and Mike to solve the bakery's muffin orders! Learn how to align column columns, carry, and borrow to add and subtract numbers up to 1000!
       </p>
 
       {/* Journey map */}

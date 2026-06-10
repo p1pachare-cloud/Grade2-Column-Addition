@@ -2765,7 +2765,7 @@ const questionBank = [
     "answerO": 4,
     "regroup_ones": true,
     "regroup_tens": false,
-    "questionText": "There are 228 marbles in the hawker stall. Raj adds 266 more marbles. How many marbles are there in total?",
+    "questionText": "There are 228 marbles in the hawker stall. Mike adds 266 more marbles. How many marbles are there in total?",
     "visual": "word_problem",
     "options": [
       494,
@@ -3095,7 +3095,7 @@ const questionBank = [
     "answerO": 9,
     "regroup_ones": true,
     "regroup_tens": false,
-    "questionText": "There were 497 marbles in the hawker stall. Raj took away 138 of them. How many marbles are left now?",
+    "questionText": "There were 497 marbles in the hawker stall. Mike took away 138 of them. How many marbles are left now?",
     "visual": "word_problem",
     "options": [
       358,

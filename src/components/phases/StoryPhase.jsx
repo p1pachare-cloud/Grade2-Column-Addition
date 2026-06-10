@@ -121,7 +121,7 @@ export default function StoryPhase({ audioEnabled, onComplete }) {
   // Define dynamic visuals for the 7 panels
   const renderVisual = () => {
     switch (panelIdx) {
-      case 0: // Panel 1: Mei Ling has 234 books. Raj has 158 books.
+      case 0: // Panel 1: Mei Ling has 234 books. Mike has 158 books.
         return (
           <StoryImage src="/images/story-panel-1.jpg" alt="Our Book Collection" />
         );
@@ -175,7 +175,7 @@ export default function StoryPhase({ audioEnabled, onComplete }) {
   };
 
   const panelTexts = [
-    "Mei Ling has 234 books. Raj has 158 books.",
+    "Mei Ling has 234 books. Mike has 158 books.",
     "How many books do they have altogether?",
     "Write the numbers one on top of the other. Hundreds under hundreds, Tens under tens, Ones under ones.",
     "Start with the ones column: 4 ones + 8 ones = 12 ones. Since this is 10 or more, we must regroup!",
