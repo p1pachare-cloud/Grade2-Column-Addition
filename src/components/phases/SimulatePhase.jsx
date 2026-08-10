@@ -110,7 +110,7 @@ export default function SimulatePhase({ audioEnabled, onComplete }) {
             All 3 Simulation Stations Complete!
           </div>
           <p style={{ color: '#b0b0d0', margin: '4px 0 16px 0', fontSize: '14px' }}>
-            You are now ready to tackle the play challenges!
+            You are now ready to tackle the practice challenges!
           </p>
           <button 
             className="btn btn-success" 
@@ -127,7 +127,7 @@ export default function SimulatePhase({ audioEnabled, onComplete }) {
               boxShadow: '0 4px 12px rgba(46,204,113,0.3)'
             }}
           >
-            🎮 Go to Play Phase!
+            🎮 Go to Practice Phase!
           </button>
         </div>
       )}

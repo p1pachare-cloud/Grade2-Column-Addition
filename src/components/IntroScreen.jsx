@@ -2,89 +2,81 @@
 import React from 'react';
 
 const PHASES = [
-  { key: 'wonder',   emoji: '🔍', label: 'Wonder',   desc: 'Discover the mystery' },
-  { key: 'story',    emoji: '📖', label: 'Story',    desc: 'Learn with Mei Ling' },
-  { key: 'simulate', emoji: '🧪', label: 'Simulate', desc: 'Add/subtract blocks' },
-  { key: 'play',     emoji: '🎮', label: 'Play',     desc: '100 fun challenges' },
-  { key: 'reflect',  emoji: '📓', label: 'Reflect',  desc: 'Show what you know' },
+  { key: 'wonder',   emoji: '🤔', label: 'Wonder',   desc: 'A math mystery!' },
+  { key: 'story',    emoji: '📖', label: 'Story',    desc: 'The school fair count' },
+  { key: 'simulate', emoji: '🧪', label: 'Simulate', desc: '3 Station Sandbox' },
+  { key: 'play',     emoji: '🎮', label: 'Practice', desc: '100 challenges' },
+  { key: 'reflect',  emoji: '📓', label: 'Reflect',  desc: 'Quiz & review' },
 ];
 
 export default function IntroScreen({ onStart, onResume, hasSession }) {
   return (
-    <div className="intro-screen">
+    <div className="home-screen-redesign">
 
-      {/* Curriculum badge */}
-      <div className="intro-badge">✨ Intellia SG · Grade 2 Maths</div>
+      {/* Top Pill Badge */}
+      <div className="home-top-badge">
+        ✨ <strong>Grade 2 Math</strong>
+      </div>
 
-      {/* Title */}
-      <div className="intro-hero">
-        <h1 className="intro-title">
-          Column Addition
+      {/* Main Title & Subtitle */}
+      <div className="home-title-block">
+        <h1 className="home-main-title">
+          Numbers to 1000
         </h1>
-        <p style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1rem,2.5vw,1.3rem)', color: 'var(--text-secondary)', marginTop: 0 }}>
-          Addition & Subtraction with Regrouping
+        <h2 className="home-sub-title">
+          Addition & Subtraction with Regrouping!
+        </h2>
+      </div>
+
+      {/* Hero Card Text */}
+      <div className="home-hero-card">
+        <p>
+          Join <strong>Wei Ming</strong> to master column addition, carrying, and borrowing up to <strong>1000</strong>! 🧁
         </p>
       </div>
 
-      {/* Mascot */}
-      <div className="mascot-container">
-        <div className="mascot">🤖</div>
-        <div className="speech-bubble">
-          Ready to master column addition and subtraction? 🧁
-        </div>
+      {/* 5 Cards Grid */}
+      <div className="home-phases-grid">
+        {PHASES.map((p) => (
+          <div key={p.key} className="home-phase-card">
+            <div className="home-phase-emoji">{p.emoji}</div>
+            <div className="home-phase-title"><strong>{p.label}</strong></div>
+            <div className="home-phase-desc">{p.desc}</div>
+          </div>
+        ))}
       </div>
 
-      {/* Description */}
-      <p className="intro-subtitle">
-        Join Mei Ling and Mike to solve the bakery's muffin orders! Learn how to align column columns, carry, and borrow to add and subtract numbers up to 1000!
-      </p>
-
-      {/* Journey map */}
-      <div className="intro-journey-map">
-        <h3 className="intro-journey-title">Your Learning Journey</h3>
-        <div className="intro-journey-steps">
-          {PHASES.map((p, i) => (
-            <div key={p.key} className="intro-journey-step">
-              <div className="intro-journey-icon">{p.emoji}</div>
-              <div className="intro-journey-info">
-                <div className="intro-journey-label">{p.label}</div>
-                <div className="intro-journey-desc">{p.desc}</div>
-              </div>
-              {i < PHASES.length - 1 && <div className="intro-journey-arrow">→</div>}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Resume banner */}
+      {/* Resume Banner */}
       {hasSession && (
-        <div className="intro-resume-banner">
-          <span style={{ fontSize: 26 }}>🔄</span>
-          <p>You have a saved session! Resume from where you left off?</p>
-          <button className="btn btn-success btn-sm" onClick={onResume}>Resume</button>
+        <div className="intro-resume-banner" style={{ margin: '16px 0 8px 0' }}>
+          <span style={{ fontSize: 24 }}>🔄</span>
+          <p style={{ margin: 0 }}>You have a saved session! Resume where you left off?</p>
+          <button className="btn btn-success btn-sm" onClick={onResume}>
+            Resume
+          </button>
         </div>
       )}
 
-      {/* CTA */}
-      <div className="intro-buttons">
-        <button className="btn btn-primary btn-lg" onClick={onStart} style={{ borderRadius: '999px' }}>
-          {hasSession ? '🆕 Start Fresh' : '🚀 Begin Your Journey!'}
+      {/* Big Gold CTA Button */}
+      <div className="home-cta-block">
+        <button
+          className="home-cta-button"
+          onClick={onStart}
+        >
+          🚀 <strong>Begin Your Journey!</strong>
         </button>
       </div>
 
-      {/* Feature cards */}
-      <div className="feature-cards">
-        <div className="feature-card">
-          <div className="feature-card-icon">⏱️</div>
-          <div className="feature-card-label">~16 minutes</div>
+      {/* Bottom Feature Badges */}
+      <div className="home-bottom-badges">
+        <div className="home-feature-pill">
+          <span>🎯</span> <strong>100 Questions</strong>
         </div>
-        <div className="feature-card">
-          <div className="feature-card-icon">🎯</div>
-          <div className="feature-card-label">100 Challenges</div>
+        <div className="home-feature-pill">
+          <span>🔢</span> <strong>Numbers to 1000</strong>
         </div>
-        <div className="feature-card">
-          <div className="feature-card-icon">🏅</div>
-          <div className="feature-card-label">8 Badges</div>
+        <div className="home-feature-pill">
+          <span>🏆</span> <strong>Badges & XP</strong>
         </div>
       </div>
 

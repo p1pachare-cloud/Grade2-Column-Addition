@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import FloatingNumbers from './components/FloatingNumbers.jsx';
 import IntroScreen from './components/IntroScreen.jsx';
 import WonderPhase from './components/phases/WonderPhase.jsx';
@@ -8,8 +8,8 @@ import SimulatePhase from './components/phases/SimulatePhase.jsx';
 import PlayPhase from './components/phases/PlayPhase.jsx';
 import ReflectPhase from './components/phases/ReflectPhase.jsx';
 import ResultsScreen from './components/ResultsScreen.jsx';
-import { setAudioEnabled } from './utils/audio.js';
-import { calcStars } from './utils/scoring.js';
+import PopupModal from './components/shared/PopupModal.jsx';
+import { setAudioEnabled, SFX } from './utils/audio.js';
 
 // ─── Phase definitions ────────────────────────────────────────────
 const PHASES = [
@@ -17,7 +17,7 @@ const PHASES = [
   { key: 'wonder',   label: 'Wonder',   emoji: '🔍', showInBar: true,  num: '01' },
   { key: 'story',    label: 'Story',    emoji: '📖', showInBar: true,  num: '02' },
   { key: 'simulate', label: 'Simulate', emoji: '🧪', showInBar: true,  num: '03' },
-  { key: 'play',     label: 'Play',     emoji: '🎮', showInBar: true,  num: '04' },
+  { key: 'play',     label: 'Practice', emoji: '🎮', showInBar: true,  num: '04' },
   { key: 'reflect',  label: 'Reflect',  emoji: '📓', showInBar: true,  num: '05' },
   { key: 'results',  label: 'Results',  emoji: '🏆', showInBar: false },
 ];
@@ -60,6 +60,7 @@ export default function App() {
   const [gs, setGs] = useState(DEFAULT_STATE);
   const [audioOn, setAudioOn] = useState(true);
   const [hasSaved, setHasSaved] = useState(false);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // Load saved state on mount
   useEffect(() => {
@@ -74,7 +75,7 @@ export default function App() {
     if (gs.phase !== 'intro') saveState(gs);
   }, [gs]);
 
-  // Sync audio
+  // Sync audio state
   useEffect(() => {
     setAudioEnabled(audioOn);
   }, [audioOn]);
@@ -91,10 +92,12 @@ export default function App() {
   }
 
   function handleStart() {
+    SFX.click();
     setGs({ ...DEFAULT_STATE, audioEnabled: audioOn, phase: 'wonder' });
   }
 
   function handleResume() {
+    SFX.click();
     const saved = loadState();
     if (saved) {
       setGs(saved);
@@ -139,12 +142,14 @@ export default function App() {
     setHasSaved(false);
   }
 
-  function goHome() {
-    setGs(prev => ({ ...prev, phase: 'intro' }));
+  function goHomePrompt() {
+    setShowExitConfirm(true);
   }
 
-  // Determine current bar phase index
-  const currentPhaseIdx = BAR_PHASES.findIndex(p => p.key === gs.phase);
+  function confirmExitHome() {
+    setShowExitConfirm(false);
+    setGs(prev => ({ ...prev, phase: 'intro' }));
+  }
 
   function canAccessPhase(phaseKey) {
     const order = ['wonder', 'story', 'simulate', 'play', 'reflect'];
@@ -165,15 +170,18 @@ export default function App() {
       <FloatingNumbers />
       <div className="app-container">
 
-        {/* ─── Audio toggle (fixed top-right) ─── */}
-        <button
-          className="audio-toggle-btn"
-          style={{ position: 'fixed', top: 16, right: 16, zIndex: 200 }}
-          onClick={() => setAudioOn(a => !a)}
-          aria-label={audioOn ? 'Mute audio' : 'Enable audio'}
-        >
-          {audioOn ? '🔊' : '🔇'}
-        </button>
+        {/* ─── Sound / Audio Toggle (RIGHT-CENTER OF THE SCREEN - Only in lesson phases) ─── */}
+        {gs.phase !== 'intro' && (
+          <button
+            className="audio-toggle-btn audio-toggle-right-center"
+            onClick={() => { SFX.click(); setAudioOn(a => !a); }}
+            aria-label={audioOn ? 'Mute audio' : 'Enable audio'}
+            title={audioOn ? 'Mute Audio Narration' : 'Enable Audio Narration'}
+          >
+            <span className="audio-toggle-icon">{audioOn ? '🔊' : '🔇'}</span>
+            <span className="audio-toggle-label">{audioOn ? 'Sound ON' : 'Muted'}</span>
+          </button>
+        )}
 
         {/* ─── Journey bar (fixed top-center) ─── */}
         {showNav && (
@@ -208,13 +216,13 @@ export default function App() {
 
         {/* ─── Home button (fixed top-left) ─── */}
         {showNav && (
-          <button className="home-btn" onClick={goHome} aria-label="Go home">
-            🏠 Home
+          <button className="home-btn" onClick={goHomePrompt} aria-label="Go home">
+            🏠 <strong>Home</strong>
           </button>
         )}
 
         {/* ─── Main phase content ─── */}
-        <div style={{ width: '100%', paddingTop: showNav ? '64px' : '0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ width: '100%', paddingTop: showNav ? '68px' : '0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
           {gs.phase === 'intro' && (
             <IntroScreen
@@ -248,6 +256,23 @@ export default function App() {
           )}
 
         </div>
+
+        {/* Exit Confirmation Modal */}
+        <PopupModal
+          isOpen={showExitConfirm}
+          onClose={() => setShowExitConfirm(false)}
+          title="Return to Main Menu?"
+          type="exit"
+          icon="🚪"
+          confirmText="Yes, Go Home"
+          cancelText="Keep Playing"
+          onConfirm={confirmExitHome}
+        >
+          <p style={{ fontSize: '15px', color: 'var(--text-primary)', margin: 0 }}>
+            Your current lesson progress will be saved automatically so you can resume anytime!
+          </p>
+        </PopupModal>
+
       </div>
     </>
   );

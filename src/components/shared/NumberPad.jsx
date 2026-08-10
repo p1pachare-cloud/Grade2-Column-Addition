@@ -1,14 +1,25 @@
 // src/components/shared/NumberPad.jsx
 import React from 'react';
+import { SFX } from '../../utils/audio.js';
 
-export default function NumberPad({ value, onChange, onSubmit, max = 999 }) {
+export default function NumberPad({
+  value,
+  onChange,
+  onSubmit,
+  max = 999,
+  disabled = false,
+}) {
   const handleDigit = (digit) => {
+    if (disabled) return;
+    SFX.click();
     const str = String(value || '');
     if (str.length >= String(max).length) return;
     onChange(str === '0' ? String(digit) : str + digit);
   };
 
   const handleBackspace = () => {
+    if (disabled) return;
+    SFX.click();
     const str = String(value || '');
     if (str.length <= 1) {
       onChange('');
@@ -18,190 +29,130 @@ export default function NumberPad({ value, onChange, onSubmit, max = 999 }) {
   };
 
   const handleClear = () => {
+    if (disabled) return;
+    SFX.click();
     onChange('');
+  };
+
+  const handleOK = () => {
+    if (disabled || value === '' || value === null || value === undefined) return;
+    SFX.click();
+    if (onSubmit) onSubmit();
   };
 
   const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
-    <div className="number-pad-container" style={{
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '16px',
-      padding: '16px',
-      maxWidth: '280px',
-      width: '100%',
-      margin: '0 auto',
-      boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '12px'
-    }}>
-      {/* Display value (if any is active/visualized) */}
-      <div style={{
-        background: 'rgba(0, 0, 0, 0.25)',
-        border: '1.5px solid rgba(255, 255, 255, 0.1)',
-        borderRadius: '8px',
-        height: '48px',
+    <div
+      className="numpad-wrapper"
+      style={{
+        background: 'rgba(25, 25, 75, 0.75)',
+        backdropFilter: 'blur(16px)',
+        border: '1.5px solid rgba(255, 255, 255, 0.16)',
+        borderRadius: '24px',
+        padding: '18px',
+        width: '260px',
+        margin: '0 auto',
+        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.2)',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '24px',
-        fontWeight: 'bold',
-        color: '#fff',
-        fontFamily: 'var(--font-display)',
-        textShadow: '0 0 10px rgba(255,255,255,0.3)'
-      }}>
-        {value === '' ? <span style={{ opacity: 0.35 }}>?</span> : value}
+        flexDirection: 'column',
+        gap: '14px',
+        opacity: disabled ? 0.5 : 1,
+        pointerEvents: disabled ? 'not-allowed' : 'auto',
+        transition: 'all 0.3s ease',
+        userSelect: 'none',
+      }}
+    >
+      {/* Display Screen */}
+      <div
+        style={{
+          background: 'linear-gradient(180deg, rgba(10, 10, 35, 0.9), rgba(18, 18, 50, 0.95))',
+          border: '1.5px solid rgba(92, 124, 250, 0.3)',
+          borderRadius: '16px',
+          height: '56px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 16px',
+          boxShadow: 'inset 0 3px 8px rgba(0, 0, 0, 0.6), 0 0 15px rgba(92, 124, 250, 0.15)',
+        }}
+      >
+        <span
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: '30px',
+            fontWeight: '900',
+            color: value !== '' && value !== null && value !== undefined ? 'var(--gold)' : 'rgba(255, 255, 255, 0.25)',
+            textShadow: value !== '' && value !== null && value !== undefined ? '0 0 12px rgba(255, 193, 7, 0.6)' : 'none',
+            letterSpacing: '2px',
+          }}
+        >
+          {value === '' || value === null || value === undefined ? '?' : value}
+        </span>
       </div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '8px'
-      }}>
-        {digits.map(d => (
+      {/* Digits Grid 3x4 */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '10px',
+        }}
+      >
+        {digits.map((d) => (
           <button
             key={d}
             type="button"
-            className="numpad-btn"
+            className="numpad-key-btn"
             onClick={() => handleDigit(d)}
-            style={{
-              height: '60px',
-              width: '100%',
-              borderRadius: '12px',
-              border: '1px solid rgba(255,255,255,0.15)',
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-              color: '#fff',
-              fontSize: '20px',
-              fontWeight: '700',
-              fontFamily: 'var(--font-display)',
-              cursor: 'pointer',
-              transition: 'all 0.15s ease',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-            }}
-            onMouseDown={(e) => {
-              e.currentTarget.style.transform = 'scale(0.95)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
-            }}
-            onMouseUp={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))';
-            }}
+            disabled={disabled}
           >
             {d}
           </button>
         ))}
 
-        {/* Clear */}
+        {/* Clear Button */}
         <button
           type="button"
-          className="numpad-btn clear"
+          className="numpad-key-btn numpad-clear-btn"
           onClick={handleClear}
-          style={{
-            height: '60px',
-            width: '100%',
-            borderRadius: '12px',
-            border: '1px solid rgba(239, 83, 80, 0.3)',
-            background: 'rgba(239, 83, 80, 0.15)',
-            color: '#ef9a9a',
-            fontSize: '15px',
-            fontWeight: '600',
-            fontFamily: 'var(--font-display)',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          disabled={disabled}
+          title="Clear input"
         >
           C
         </button>
 
-        {/* 0 */}
+        {/* 0 Digit */}
         <button
           type="button"
-          className="numpad-btn"
+          className="numpad-key-btn"
           onClick={() => handleDigit(0)}
-          style={{
-            height: '60px',
-            width: '100%',
-            borderRadius: '12px',
-            border: '1px solid rgba(255,255,255,0.15)',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-            color: '#fff',
-            fontSize: '20px',
-            fontWeight: '700',
-            fontFamily: 'var(--font-display)',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          disabled={disabled}
         >
           0
         </button>
 
-        {/* Backspace */}
+        {/* Backspace Button */}
         <button
           type="button"
-          className="numpad-btn backspace"
+          className="numpad-key-btn numpad-backspace-btn"
           onClick={handleBackspace}
-          style={{
-            height: '60px',
-            width: '100%',
-            borderRadius: '12px',
-            border: '1px solid rgba(255,255,255,0.15)',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-            color: '#fff',
-            fontSize: '18px',
-            fontWeight: '600',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          disabled={disabled}
+          title="Backspace"
         >
           ⌫
         </button>
       </div>
 
+      {/* Submit / OK Button */}
       {onSubmit && (
         <button
           type="button"
-          className="numpad-submit-btn"
-          onClick={onSubmit}
-          disabled={value === ''}
-          style={{
-            height: '50px',
-            width: '100%',
-            borderRadius: '12px',
-            border: 'none',
-            background: value === '' ? 'rgba(255, 255, 255, 0.1)' : 'linear-gradient(135deg, #42a5f5, #1e88e5)',
-            color: value === '' ? 'rgba(255, 255, 255, 0.3)' : '#fff',
-            fontSize: '16px',
-            fontWeight: '700',
-            fontFamily: 'var(--font-display)',
-            cursor: value === '' ? 'not-allowed' : 'pointer',
-            boxShadow: value === '' ? 'none' : '0 4px 12px rgba(30,136,229,0.3)',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: '4px'
-          }}
+          className="numpad-submit-action-btn"
+          onClick={handleOK}
+          disabled={disabled || value === '' || value === null || value === undefined}
         >
-          OK
+          <strong>OK</strong>
         </button>
       )}
     </div>
