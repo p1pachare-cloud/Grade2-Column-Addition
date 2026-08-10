@@ -21,10 +21,10 @@ export default function IntroScreen({ onStart, onResume, hasSession }) {
       {/* Main Title & Subtitle */}
       <div className="home-title-block">
         <h1 className="home-main-title">
-          Numbers to 1000
+          Column Addition
         </h1>
         <h2 className="home-sub-title">
-          Addition & Subtraction with Regrouping!
+          Addition & Subtraction with Regrouping
         </h2>
       </div>
 
@@ -73,7 +73,7 @@ export default function IntroScreen({ onStart, onResume, hasSession }) {
           <span>🎯</span> <strong>100 Questions</strong>
         </div>
         <div className="home-feature-pill">
-          <span>🔢</span> <strong>Numbers to 1000</strong>
+          <span>➕</span> <strong>Column Addition</strong>
         </div>
         <div className="home-feature-pill">
           <span>🏆</span> <strong>Badges & XP</strong>
