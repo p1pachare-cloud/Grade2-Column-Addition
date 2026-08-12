@@ -189,8 +189,8 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 /* ===== AUDIO TOGGLE (RIGHT-CENTER) ===== */
 .audio-toggle-right-center {
   position: fixed !important;
-  right: max(16px, calc(50vw - 495px)) !important;
-  top: 50% !important;
+  right: max(16px, calc(50vw - 540px)) !important;
+  top: 30% !important;
   transform: translateY(-50%) !important;
   z-index: 9999 !important;
   width: auto !important;
@@ -235,6 +235,8 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 @media (max-width: 600px) {
   .audio-toggle-right-center {
     right: 8px !important;
+    top: 20px !important;
+    transform: none !important;
     padding: 0 10px !important;
   }
   .audio-toggle-label {
